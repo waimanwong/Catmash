@@ -31,6 +31,7 @@ namespace Catmash
             services.AddControllers();
             services.AddScoped<IBattleService, BattleService>();
             services.AddScoped<IImageProviderService, ImageProviderService>();
+            services.AddScoped<IBattleOutcomeRepository, BattleOutcomeRepository>();
 
             services.AddDbContext<CatmashDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

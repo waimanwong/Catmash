@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,10 +7,14 @@ namespace Catmash.Domain
     public class BattleService : IBattleService
     {
         private readonly IImageProviderService _imageProviderService;
+        private readonly IBattleOutcomeRepository _battleOutcomeRepository;
 
-        public BattleService(IImageProviderService imageProviderService)
+        public BattleService(
+            IImageProviderService imageProviderService,
+            IBattleOutcomeRepository battleOutcomeRepository)
         {
             _imageProviderService = imageProviderService;
+            _battleOutcomeRepository = battleOutcomeRepository;
         }
 
         public async Task<NewBattleDto> InitBattleAsync()
@@ -35,6 +38,11 @@ namespace Catmash.Domain
             }
 
             //Register Battle
+            var battleOutcome = new BattleOutcome(battleOutcomeDto.SelectedImageId, battleOutcomeDto.UnselectedImageId);
+
+            await _battleOutcomeRepository.AddAsync(battleOutcome);
+            await _battleOutcomeRepository.CommitAsync();
+
             return;
         }
 
@@ -54,5 +62,4 @@ namespace Catmash.Domain
             return selectedImageIsInvalid || unselectedImageIsInvalid;
         }
     }
-
 }

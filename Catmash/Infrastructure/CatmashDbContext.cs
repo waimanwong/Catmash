@@ -13,5 +13,7 @@ namespace Catmash.Infrastructure
         }
 
         public DbSet<Image> Images { get; set; }
+
+        public DbSet<BattleOutcome> BattleOutcomes { get; set; }
     }
 }
