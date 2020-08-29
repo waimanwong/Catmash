@@ -8,15 +8,22 @@ namespace Catmash.Domain
 
     public class BattleService : IBattleService
     {
-        public NewBattleDto InitBattle()
+        private readonly IImageProviderService _imageProviderService;
+
+        public BattleService(IImageProviderService imageProviderService)
         {
+            _imageProviderService = imageProviderService;
+        }
+
+        public async Task<NewBattleDto> InitBattleAsync()
+        {
+            var randomImages = await _imageProviderService.GetRandomImagesAsync(2);
+
             return new NewBattleDto
             {
-                Images = new List<ImageDto>()
-                {
-                    new ImageDto { Id = "foo", Url = "url1"},
-                    new ImageDto { Id = "bar", Url = "bar"}
-                }
+                Images = randomImages
+                    .Select(img => new ImageDto {  Id = img.Id, Url = img.Url})
+                    .ToList()
             };
         }
     }

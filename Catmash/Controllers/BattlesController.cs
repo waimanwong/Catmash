@@ -21,9 +21,9 @@ namespace Catmash.Controllers
         
         [HttpGet]
         [Route("battles/init")]
-        public NewBattleDto GetNewBattle()
+        public Task<NewBattleDto> GetNewBattleAsync()
         {
-            return _battleService.InitBattle();
+            return _battleService.InitBattleAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Catmash.Domain
 {
@@ -8,7 +9,7 @@ namespace Catmash.Domain
         /// returns a battle with randomly selected images
         /// </summary>
         /// <returns></returns>
-        NewBattleDto InitBattle();
+        Task<NewBattleDto> InitBattleAsync();
     }
 
     public class NewBattleDto
