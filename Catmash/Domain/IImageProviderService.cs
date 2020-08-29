@@ -6,6 +6,8 @@ namespace Catmash.Domain
     public interface IImageProviderService
     {
         Task<List<Image>> GetRandomImagesAsync(int count);
+
+        Task<bool> DoesImageExist(string id);
     }
 
     

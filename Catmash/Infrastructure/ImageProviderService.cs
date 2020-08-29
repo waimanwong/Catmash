@@ -16,6 +16,11 @@ namespace Catmash.Infrastructure
             _dbContext = dbContext;
         }
 
+        public Task<bool> DoesImageExist(string id)
+        {
+            return _dbContext.Images.AnyAsync(img => img.Id == id);
+        }
+
         public Task<List<Image>> GetRandomImagesAsync(int count)
         {
             return _dbContext.Images.AsNoTracking()

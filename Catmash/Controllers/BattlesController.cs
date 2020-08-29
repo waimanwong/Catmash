@@ -18,12 +18,19 @@ namespace Catmash.Controllers
             _battleService = battleService;
         }
 
-        
         [HttpGet]
         [Route("battles/init")]
         public Task<NewBattleDto> GetNewBattleAsync()
         {
             return _battleService.InitBattleAsync();
         }
+
+        [HttpPost]
+        [Route("battles/outcomeRegistration")]
+        public Task RegisterBattleOutcome(BattleOutcomeDto battleOutcomeDto)
+        {
+            return _battleService.RegisterBattleOutcomeAsync(battleOutcomeDto);
+        }
+
     }
 }

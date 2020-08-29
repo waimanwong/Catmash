@@ -10,6 +10,19 @@ namespace Catmash.Domain
         /// </summary>
         /// <returns></returns>
         Task<NewBattleDto> InitBattleAsync();
+
+        /// <summary>
+        /// Records the choice
+        /// </summary>
+        /// <param name="battleOutcomeDto"></param>
+        /// <returns></returns>
+        Task RegisterBattleOutcomeAsync(BattleOutcomeDto battleOutcomeDto);
+    }
+
+    public class BattleOutcomeDto
+    {
+        public string SelectedImageId { get; set; }
+        public string UnselectedImageId { get; set; }
     }
 
     public class NewBattleDto
