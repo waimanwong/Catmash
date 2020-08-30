@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,15 +9,18 @@ namespace Catmash.Domain
 
     public class BattleService : IBattleService
     {
+        private readonly IValidator<BattleOutcomeDto> _validator;
         private readonly IImageProvider _imageProviderService;
         private readonly IBattleOutcomeRepository _battleOutcomeRepository;
 
         public BattleService(
             IImageProvider imageProviderService,
-            IBattleOutcomeRepository battleOutcomeRepository)
+            IBattleOutcomeRepository battleOutcomeRepository,
+            IValidator<BattleOutcomeDto> validator)
         {
             _imageProviderService = imageProviderService;
             _battleOutcomeRepository = battleOutcomeRepository;
+            _validator = validator;
         }
 
         public async Task<NewBattleDto> InitBattleAsync()
@@ -34,10 +38,7 @@ namespace Catmash.Domain
         public async Task RegisterBattleOutcomeAsync(BattleOutcomeDto battleOutcomeDto)
         {
             // Input validation
-            if (await BattleOutcomeIsNotValidAsync(battleOutcomeDto))
-            {
-                throw new DomainException("Battle outcome is invalid");
-            }
+            await _validator.ValidateAndThrowAsync(battleOutcomeDto);
 
             //Register Battle
             var battleOutcome = new BattleOutcome(battleOutcomeDto.SelectedImageId, battleOutcomeDto.UnselectedImageId);
@@ -48,20 +49,5 @@ namespace Catmash.Domain
             return;
         }
 
-        private async Task<bool> BattleOutcomeIsNotValidAsync(BattleOutcomeDto battleOutcomeDto)
-        {
-            var selectedImageId = battleOutcomeDto.SelectedImageId;
-            var unselectedImageId = battleOutcomeDto.UnselectedImageId;
-
-            if (selectedImageId == unselectedImageId)
-            {
-                return true;
-            }
-
-            var selectedImageIsInvalid = (await _imageProviderService.DoesImageExist(selectedImageId)) == false;
-            var unselectedImageIsInvalid = (await _imageProviderService.DoesImageExist(unselectedImageId)) == false;
-
-            return selectedImageIsInvalid || unselectedImageIsInvalid;
-        }
     }
 }

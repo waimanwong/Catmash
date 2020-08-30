@@ -1,6 +1,6 @@
 ﻿using Catmash.Domain;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net;
 using System.Net.Mime;
@@ -38,7 +38,7 @@ namespace Catmash.Middlewares.ErrorHandling
 
             switch (e)
             {
-                case DomainException domainException:
+                case ValidationException _:
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
                 

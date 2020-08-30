@@ -6,6 +6,7 @@ using Catmash.Domain;
 using Catmash.Infrastructure;
 using Catmash.Middlewares;
 using Catmash.Middlewares.ErrorHandling;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,7 @@ namespace Catmash
             services.AddScoped<IBattleService, BattleService>();
             services.AddScoped<IImageProvider, ImageProvider>();
             services.AddScoped<IBattleOutcomeRepository, BattleOutcomeRepository>();
+            services.AddScoped<IValidator<BattleOutcomeDto>, BattleOutcomeDtoValidator>();
             services.AddScoped<IImageStatisticsProvider, ImageStatisticsProvider>();
             
             services.AddDbContext<CatmashDbContext>(options =>
