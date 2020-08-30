@@ -16,12 +16,19 @@
 <body>
     <div id="app">
         <h1>Catmash</h1>
-        <table class="center">
-            <tr>
-                <td><img id='img1' src=''></img></td>
-                <td><img id='img2' src=''></img></td>
-            </tr>
-        </table>
+        <div>
+            <table class="center">
+                <tr>
+                    <td><img id='img1' src=''></img></td>
+                    <td><img id='img2' src=''></img></td>
+                </tr>
+            </table>
+        </div>
+        <div id="leaderboard" class="center">
+            <div id='totalVotes' style="text-align:center"></div>
+            <div>Voir les plus beaux chats</div>
+            <div id='topNImages'></div>
+        </div>
     </div>
 
     <script>
@@ -52,16 +59,31 @@
             });
         }
 
+        function loadLeaderboard(callback) {
+            $.get('leaderboard', function(leaderboard) {
+                var totalVotes = leaderboard.totalVotes,
+                    topImages = leaderboard.topImages;
+
+                $('#totalVotes').text(totalVotes + ' votes');
+
+                $('#topNImages').empty();
+                topImages.forEach(function(img, index) {
+                    $('#topNImages').append('<div><label class="rank">rank ' + String(index+1) + '</label><img src="' + img.url + '"></img></div>');
+                })
+                
+                callback();
+            });
+        }
+
         function postBattleOutcome(battleOutcome) {
             $.ajax('/battles/outcomeRegistration', {
                 data : JSON.stringify(battleOutcome),
                 contentType : 'application/json',
                 type : 'POST', 
                 success : function() {
-                    initBattle();
+                    loadLeaderboard(initBattle);
                 }
             });
-
         }
 
         $( document ).ready(function() {
