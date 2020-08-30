@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Catmash.Domain
 {
-    public interface IImageProviderService
+    public interface IImageProvider
     {
         Task<List<Image>> GetRandomImagesAsync(int count);
 

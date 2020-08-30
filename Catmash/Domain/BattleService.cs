@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catmash.Domain
 {
+
     public class BattleService : IBattleService
     {
-        private readonly IImageProviderService _imageProviderService;
+        private readonly IImageProvider _imageProviderService;
         private readonly IBattleOutcomeRepository _battleOutcomeRepository;
 
         public BattleService(
-            IImageProviderService imageProviderService,
+            IImageProvider imageProviderService,
             IBattleOutcomeRepository battleOutcomeRepository)
         {
             _imageProviderService = imageProviderService;

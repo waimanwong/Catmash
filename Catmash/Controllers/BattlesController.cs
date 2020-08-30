@@ -32,5 +32,6 @@ namespace Catmash.Controllers
             return _battleService.RegisterBattleOutcomeAsync(battleOutcomeDto);
         }
 
+
     }
 }

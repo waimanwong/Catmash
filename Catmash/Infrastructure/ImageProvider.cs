@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Catmash.Infrastructure
 {
-    public class ImageProviderService : IImageProviderService
+    public class ImageProvider : IImageProvider
     {
         private readonly CatmashDbContext _dbContext;
 
-        public ImageProviderService(CatmashDbContext dbContext)
+        public ImageProvider(CatmashDbContext dbContext)
         {
             _dbContext = dbContext;
         }
