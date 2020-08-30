@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Catsmash</title>
+    <script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
+    <style>
+        h1 {text-align:center}
+        .center { margin: auto; width: 50%; }
+        img { width: 300px; height: 300px }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Catmash</h1>
+        <table class="center">
+            <tr>
+                <td><img id='img1' src=''></img></td>
+                <td><img id='img2' src=''></img></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function initBattle() {
+            $.get('battles/init', function(newBattle) {
+                var images = newBattle.images,
+                    image1 = images[0], url1 = image1.url, id1 = image1.id,
+                    image2 = images[1], url2 = image2.url, id2 = image2.id;
+
+                $('#img1')
+                    .attr('src', url1)
+                    .unbind('click')
+                    .click(function() {
+                        postBattleOutcome({
+                            "SelectedImageId" : id1,
+                            "UnselectedImageId" : id2
+                        });
+                    });
+                $('#img2')
+                    .attr('src', url2)
+                    .unbind('click')
+                    .click(function() {
+                        postBattleOutcome({
+                            "SelectedImageId" : id2,
+                            "UnselectedImageId" : id1
+                        });
+                    });
+            });
+        }
+
+        function postBattleOutcome(battleOutcome) {
+            $.ajax('/battles/outcomeRegistration', {
+                data : JSON.stringify(battleOutcome),
+                contentType : 'application/json',
+                type : 'POST', 
+                success : function() {
+                    initBattle();
+                }
+            });
+
+        }
+
+        $( document ).ready(function() {
+            initBattle();
+        });
+    </script>
+</body>
+</html>
