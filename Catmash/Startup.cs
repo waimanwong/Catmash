@@ -38,6 +38,7 @@ namespace Catmash
             services.AddScoped<IBattleOutcomeRepository, BattleOutcomeRepository>();
             services.AddScoped<IValidator<BattleOutcomeDto>, BattleOutcomeDtoValidator>();
             services.AddScoped<IImageStatisticsProvider, ImageStatisticsProvider>();
+            services.AddScoped<ILeaderboardService, LeaderboardService>();
             
             services.AddDbContext<CatmashDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

@@ -10,18 +10,18 @@ namespace Catmash.Controllers
     [ApiController]
     public class LeaderboardController
     {
-        private readonly IImageStatisticsProvider _imageStatisticsProviderService;
+        private readonly ILeaderboardService _leaderboardService;
 
-        public LeaderboardController(IImageStatisticsProvider imageStatisticsProviderService)
+        public LeaderboardController(ILeaderboardService leaderboardService)
         {
-            _imageStatisticsProviderService = imageStatisticsProviderService;
+            _leaderboardService = leaderboardService;
         }
 
         [HttpGet]
         [Route("leaderboard")]
-        public Task<List<ImageStatistics>> GetLeaderBoardAsync()
+        public Task<LeaderboardDto> GetLeaderBoardAsync()
         {
-            return _imageStatisticsProviderService.GetMostSelectedImagesAsync(10);
+            return _leaderboardService.GetLeaderboardAsync();
         }
     }
 }

@@ -6,6 +6,8 @@ namespace Catmash.Domain
     {
         Task AddAsync(BattleOutcome battleOutcome);
 
+        Task<int> CountAsync();
+
         Task CommitAsync();
     }
 }

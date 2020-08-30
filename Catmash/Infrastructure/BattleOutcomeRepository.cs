@@ -1,4 +1,5 @@
 ﻿using Catmash.Domain;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Catmash.Infrastructure
@@ -20,6 +21,11 @@ namespace Catmash.Infrastructure
         public Task CommitAsync()
         {
             return _dbContext.SaveChangesAsync();
+        }
+
+        public Task<int> CountAsync()
+        {
+            return _dbContext.BattleOutcomes.CountAsync();
         }
     }
 }
