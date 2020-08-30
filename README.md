@@ -48,3 +48,7 @@ We unit test `BattleOutcomeDtoValidator` using XUnit, FluentAssertions and Moq.
 - One person should see a battle only once: no authentication and lack of time.
 - Avoid DDOS: lack of time.
 - Counter cheatings: lack of time.
+- Separate UnitOfWork.
+- Separate Domain in a dedicated project (Modular monolith): may be overkilled here.
+- Integration tests (test of the endpoints)
+
