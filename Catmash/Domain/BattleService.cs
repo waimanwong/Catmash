@@ -36,7 +36,7 @@ namespace Catmash.Domain
             // Input validation
             if (await BattleOutcomeIsNotValidAsync(battleOutcomeDto))
             {
-                throw new ApplicationException("Battle is invalid");
+                throw new DomainException("Battle outcome is invalid");
             }
 
             //Register Battle

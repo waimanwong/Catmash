@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Catmash.Domain;
 using Catmash.Infrastructure;
+using Catmash.Middlewares;
+using Catmash.Middlewares.ErrorHandling;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,14 +31,14 @@ namespace Catmash
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddScoped<IBattleService, BattleService>();
             services.AddScoped<IImageProvider, ImageProvider>();
             services.AddScoped<IBattleOutcomeRepository, BattleOutcomeRepository>();
             services.AddScoped<IImageStatisticsProvider, ImageStatisticsProvider>();
-
+            
             services.AddDbContext<CatmashDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +54,8 @@ namespace Catmash
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
